@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-gateway
+  namespace: default
+  labels:
+    app: payment-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-gateway
+  template:
+    metadata:
+      labels:
+        app: payment-gateway
+    spec:
+      containers:
+      - name: payment-api
+        image: alpine:latest
+        command: ["/bin/sh", "-c"]
+        args:
+          - "echo 'Starting payment service...'; sleep 3; echo 'FATAL: DATABASE_AUTH_TOKEN is missing or corrupted. Exiting with status 1.'; exit 1"
+        resources:
+          limits:
+            memory: "64Mi"
+            cpu: "100m"
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 2
+          periodSeconds: 3

@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-08-21T13:55:20.376488+00:00",
+  "incident_detected": true,
+  "failed_workload": "inventory-service",
+  "metrics": {
+    "telemetry_ingest_time_sec": 0.0707,
+    "rca_guardrail_patch_time_sec": 0.3509,
+    "total_mttr_sec": 0.4216,
+    "guardrail_status": "PASSED_DETERMINISTIC",
+    "final_state": "RESOLVED"
+  }
+}

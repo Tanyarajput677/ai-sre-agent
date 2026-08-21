@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-gateway
+  namespace: default
+  labels:
+    app: payment-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-gateway
+  template:
+    metadata:
+      labels:
+        app: payment-gateway
+    spec:
+      containers:
+      - name: payment-api
+        image: alpine:latest
+        command: ["/bin/sh", "-c"]
+        args:
+          - "echo 'Starting payment service...'; echo 'Validating token: $DATABASE_AUTH_TOKEN'; echo 'Payment gateway healthy.'; sleep 3600"
+        env:
+        - name: DATABASE_AUTH_TOKEN
+          value: "sec_live_prod_token_99x"
+        resources:
+          limits:
+            memory: "64Mi"
+            cpu: "100m"
